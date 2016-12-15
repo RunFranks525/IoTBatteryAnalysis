@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BatteryDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BatteryTable">
+    <Key>
+      <PropertyRef Name="DateStamp" />
+    </Key>
+    <Property Name="DateStamp" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="BatteryCurrent" Type="Double" Nullable="false" />
+    <Property Name="BatteryVoltage" Type="Double" Nullable="false" />
+    <Property Name="BatteryPower" Type="Double" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="BatteryDatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BatteryTables" EntityType="Self.BatteryTable" />
+  </EntityContainer>
+</Schema>

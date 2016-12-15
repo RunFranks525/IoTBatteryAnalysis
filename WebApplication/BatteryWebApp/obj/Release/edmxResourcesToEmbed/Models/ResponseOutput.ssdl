@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="IoTBatteryDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'IoTBatteryDatabase.dbo.ResponseOutput' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ResponseOutput">
+    <Key>
+      <PropertyRef Name="DateStamp" />
+      <PropertyRef Name="prediction" />
+      <PropertyRef Name="evaluation" />
+    </Key>
+    <Property Name="DateStamp" Type="datetime" Nullable="false" />
+    <Property Name="prediction" Type="float" Nullable="false" />
+    <Property Name="evaluation" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="IoTBatteryDatabaseModelStoreContainer">
+    <EntitySet Name="ResponseOutput" EntityType="Self.ResponseOutput" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ResponseOutput].[DateStamp] AS [DateStamp], 
+    [ResponseOutput].[prediction] AS [prediction], 
+    [ResponseOutput].[evaluation] AS [evaluation]
+    FROM [dbo].[ResponseOutput] AS [ResponseOutput]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

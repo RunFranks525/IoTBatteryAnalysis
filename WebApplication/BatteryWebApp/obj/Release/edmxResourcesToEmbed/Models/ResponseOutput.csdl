@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="IoTBatteryDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ResponseOutput">
+    <Key>
+      <PropertyRef Name="DateStamp" />
+      <PropertyRef Name="prediction" />
+      <PropertyRef Name="evaluation" />
+    </Key>
+    <Property Name="DateStamp" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="prediction" Type="Double" Nullable="false" />
+    <Property Name="evaluation" Type="Double" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="IoTBatteryDatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ResponseOutputs" EntityType="Self.ResponseOutput" />
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="IoTBatteryDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IoTBatteryDatabase.dbo.ResponseOutput' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ResponseOutput">
+          <Key>
+            <PropertyRef Name="DateStamp" />
+            <PropertyRef Name="prediction" />
+            <PropertyRef Name="evaluation" />
+          </Key>
+          <Property Name="DateStamp" Type="datetime" Nullable="false" />
+          <Property Name="prediction" Type="float" Nullable="false" />
+          <Property Name="evaluation" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="IoTBatteryDatabaseModelStoreContainer">
+          <EntitySet Name="ResponseOutput" EntityType="Self.ResponseOutput" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ResponseOutput].[DateStamp] AS [DateStamp], 
+    [ResponseOutput].[prediction] AS [prediction], 
+    [ResponseOutput].[evaluation] AS [evaluation]
+    FROM [dbo].[ResponseOutput] AS [ResponseOutput]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IoTBatteryDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ResponseOutput">
+          <Key>
+            <PropertyRef Name="DateStamp" />
+            <PropertyRef Name="prediction" />
+            <PropertyRef Name="evaluation" />
+          </Key>
+          <Property Name="DateStamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="prediction" Type="Double" Nullable="false" />
+          <Property Name="evaluation" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="IoTBatteryDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ResponseOutputs" EntityType="Self.ResponseOutput" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IoTBatteryDatabaseModelStoreContainer" CdmEntityContainer="IoTBatteryDatabaseEntities">
+          <EntitySetMapping Name="ResponseOutputs">
+            <EntityTypeMapping TypeName="IoTBatteryDatabaseModel.ResponseOutput">
+              <MappingFragment StoreEntitySet="ResponseOutput">
+                <ScalarProperty Name="evaluation" ColumnName="evaluation" />
+                <ScalarProperty Name="prediction" ColumnName="prediction" />
+                <ScalarProperty Name="DateStamp" ColumnName="DateStamp" />
+                </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="IoTBatteryDatabaseModelStoreContainer" CdmEntityContainer="IoTBatteryDatabaseEntities">
+    <EntitySetMapping Name="ResponseOutputs">
+      <EntityTypeMapping TypeName="IoTBatteryDatabaseModel.ResponseOutput">
+        <MappingFragment StoreEntitySet="ResponseOutput">
+          <ScalarProperty Name="evaluation" ColumnName="evaluation" />
+          <ScalarProperty Name="prediction" ColumnName="prediction" />
+          <ScalarProperty Name="DateStamp" ColumnName="DateStamp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

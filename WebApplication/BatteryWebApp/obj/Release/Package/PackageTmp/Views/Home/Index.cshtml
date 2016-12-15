@@ -1,0 +1,116 @@
+﻿@model BatteryWebApp.ViewModels.HomeViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+<meta http-equiv="refresh" content="10">
+<div class="jumbotron">
+    <h1>Battery Monitor Application</h1>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        @Html.ActionLink("Refresh Data", "refreshData", "Home")
+        @if (Model.Response.StatusCode != HttpStatusCode.OK)
+        {
+            <div class="alert alert-danger">
+                <p>@Model.Response.Response</p>
+            </div>
+        }
+        else
+        {
+            <div id="voltagePredChart">
+                <!--jqplot fills this div with chart data-->
+            </div>
+            <br />
+            <br />
+            <div id="currentEvalChart">
+                <!--jqplot fills this div with chart data-->
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            var list = @Html.Raw(Json.Encode(@Model.chartData));
+
+            var voltageList = [];
+            var currentList = [];
+            for(var i = 0; i < list.length; i++){
+                var currentPoint = list[i];
+                var numb = currentPoint.DateStamp.match(/\d/g);
+                numb = numb.join("");
+                var date = new Date(numb * 1);
+                var currentDate = new Date(date.getFullYear(), date.getMonth(), date.getUTCDate(), date.getHours(), date.getMinutes());
+                var futureDate = new Date(date.getFullYear(), date.getMonth(), date.getUTCDate() + 1, date.getHours(), date.getMinutes());
+                console.log(currentDate);
+                console.log(futureDate);
+                voltageList.push([futureDate, currentPoint.prediction]);
+                currentList.push([currentDate, (currentPoint.evaluation/10000)]);
+            }
+
+            $.jqplot('voltagePredChart', [voltageList],
+            {
+                title: 'Voltage Prediction',
+                axes: { 
+                    yaxis: { 
+                        min: -9,
+                        max: -7,
+                        label:'Voltage (scaled by a factor of x10^43)',
+                        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+                    },
+                    xaxis:{
+                        min: new Date().setDate(futureDate.getUTCDate() - 1),
+                        max: new Date().setDate(futureDate.getUTCDate()),
+                        tickOptions:{formatString:'%H:%M'},
+                        renderer:$.jqplot.DateAxisRenderer,
+                        tickInterval: '1 hours',
+                        label:'Prediction for Voltage in Future' + '(12/8/2016)',
+                        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+                        
+                    }
+                },
+                highlighter: {
+                    show: true,
+                    sizeAdjust: 7.5
+                },
+                cursor: {
+                    show: false
+                },
+                series: [{ lineWidth: 12, color: '#5FAB78' }]
+            });
+
+            $.jqplot('currentEvalChart', [currentList],
+            {
+                title: 'Charge Evaluation',
+                axes: { 
+                    yaxis: { 
+                        min: 0, 
+                        max: 30,
+                        label:'Charge (Scaled by a factor of 10,000)',
+                        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+                    },
+                    xaxis:{
+                        min: new Date().setDate(currentDate.getUTCDate() - 2),
+                        max: new Date().setDate(currentDate.getUTCDate() + 2),
+                        tickOptions:{formatString:'%b %#d, %#I %p'},
+                        renderer:$.jqplot.DateAxisRenderer,
+                        tickInterval: '12 hours',
+                        label:'Current Power State',
+                        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+                        
+                    }
+                },
+                highlighter: {
+                    show: true,
+                    sizeAdjust: 7.5
+                },
+                cursor: {
+                    show: false
+                },
+                series: [{ lineWidth: 2, color: '#5FAB78' }]
+            });
+        });      
+    </script>
+}
